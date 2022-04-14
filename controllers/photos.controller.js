@@ -74,8 +74,8 @@ exports.vote = async (req, res) => {
       votes: req.params.id,
     });
     const photoToUpdate = await Photo.findOne({ _id: req.params.id });
-    if (alreadyVoted) {
-      res.status(500).json({ message: "You already voted on this picture" });
+    if (alreadyVoted || !photoToUpdate) {
+      res.status(500).json(err);
     } else {
       const newVote = new Voter({
         user: clientIP,
