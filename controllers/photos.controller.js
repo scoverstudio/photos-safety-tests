@@ -8,13 +8,13 @@ exports.add = async (req, res) => {
   try {
     const { title, author, email } = req.fields;
     const file = req.files.file;
-    const extension = req.files.file.name;
 
     if (title && author && email && file) {
       // if fields are not empty...
 
-      const fileExtension = extension.split(".").pop();
-      console.log(fileExtension);
+      const fileName = file.path.split("/").slice(-1)[0]; // cut only filename from full path, e.g. C:/test/abc.jpg -> abc.jpg
+      const fileExtension = fileName.split(".").pop();
+
       const pattern = new RegExp(
         /(<\s*(strong|em)*>(([A-z]|\s)*)<\s*\/\s*(strong|em)>)|(([A-z]|\s|\.)*)/,
         "g"
